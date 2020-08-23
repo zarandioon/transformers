@@ -213,6 +213,7 @@ class BertEmbeddings(nn.Module):
         token_type_embeddings = self.token_type_embeddings(token_type_ids)
 
         embeddings = inputs_embeds + position_embeddings + token_type_embeddings
+        embeddings.reshape(embeddings.shape[0], embeddings.shape[1]//2, -1)
         embeddings = self.LayerNorm(embeddings)
         embeddings = self.dropout(embeddings)
         return embeddings
@@ -899,6 +900,7 @@ class BertModel(BertPreTrainedModel):
             attentions=encoder_outputs.attentions,
         )
 
+
 def create_position_ids_from_input_ids(input_ids, padding_idx):
     """ Replace non-padding symbols with their position numbers. Position numbers begin at
     padding_idx+1. Padding symbols are ignored. This is modified from fairseq's
@@ -1099,6 +1101,8 @@ class RobertaLMHead(nn.Module):
         x = self.dense(features)
         x = gelu(x)
         x = self.layer_norm(x)
+
+        x = x.reshape(x.shape[0], x.shape[1]*2, -1)
 
         # project back to size of vocabulary with bias
         x = self.decoder(x)
