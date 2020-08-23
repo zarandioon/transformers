@@ -243,6 +243,8 @@ if is_torch_available():
         load_tf_weights_in_bert,
         BERT_PRETRAINED_MODEL_ARCHIVE_LIST,
         BertLayer,
+        RobertaForMaskedLM,
+        RobertaModel,
     )
     from .modeling_openai import (
         OpenAIGPTPreTrainedModel,
@@ -305,9 +307,7 @@ if is_torch_available():
     from .modeling_marian import MarianMTModel
     from .tokenization_marian import MarianTokenizer
     from .modeling_roberta import (
-        RobertaForMaskedLM,
         RobertaForCausalLM,
-        RobertaModel,
         RobertaForSequenceClassification,
         RobertaForMultipleChoice,
         RobertaForTokenClassification,
